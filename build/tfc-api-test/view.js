@@ -2,21 +2,39 @@
 /*!**********************************!*\
   !*** ./src/tfc-api-test/view.js ***!
   \**********************************/
-const allMains = document.querySelectorAll('.main');
-allMains.forEach(el => fetchMessages(el));
-function fetchMessages(el) {
-  el.querySelector("input").addEventListener("input", fetchText);
-  async function fetchText(e) {
-    const cleanValue = encodeURIComponent(e.target.value);
-    const resultspromise = await fetch(`/wp-json/wp/v2/message?message-type-slug=${cleanValue}`);
-    const results = await resultspromise.json();
-    console.log(results);
-    if (results.length) {
-      console.log("Results found");
-      el.querySelector(".results").innerHTML = generateHTML(results);
-    } else {
-      el.querySelector(".results").innerHTML = "Boo";
+//const allMains = document.querySelectorAll('.main');
+//allMains.forEach(el =>fetchMessages(el));
+let messageType = "";
+const radioButtons = document.querySelectorAll("input[name='message-type']");
+radioButtons.forEach(radio => {
+  if (radio.checked) {
+    messageType = radio.value;
+  }
+  radio.addEventListener('change', function () {
+    if (this.checked) {
+      messageType = this.value;
+      fetchMessages();
     }
+    //console.log(messageType);
+  });
+});
+//console.log(messageType);
+fetchMessages();
+function fetchMessages() {
+  fetchText();
+}
+async function fetchText() {
+  console.log("fetching text");
+  const cleanValue = encodeURIComponent(messageType);
+  console.log(cleanValue);
+  const resultspromise = await fetch(`/wp-json/wp/v2/message?message-type-slug=${cleanValue}`);
+  const results = await resultspromise.json();
+  console.log(results);
+  if (results.length) {
+    console.log("Results found");
+    document.querySelector(".results").innerHTML = generateHTML(results);
+  } else {
+    document.querySelector(".results").innerHTML = "No Messages Found";
   }
 }
 function generateHTML(results) {

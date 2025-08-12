@@ -43,6 +43,16 @@ $terms = get_terms(array(
     	$html = $html. 'No terms found.';
 	}
 	$html = $html.'</form>';
+	$html = $html.'</div>';
+	// groupby radio buttons
+	$html=$html.'<form id="groupby-frm">';
+	$html = $html.'<div class="groupby-selector"><label for="group-radio">Group by:</label>';
+	
+	$html = $html.'<input type="radio" name="groupby-radio" value="Year" checked>Year';
+	$html = $html.'<input type="radio" name="groupby-radio" value="Speaker">Speaker';
+	$html = $html.'</div>';
+	$html=$html.'</form>';
+
 
 echo $html;
 //}

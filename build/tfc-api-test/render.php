@@ -14,7 +14,9 @@ $terms = get_terms(array(
 	'hide_empty' => false, // Set to true if you only want terms with posts
 ));
 	//return $taxfilter;
-	$html='<form id="taxfilter-frm">';
+	$html = '<div class="main">
+	<input type=test>';
+	$html=$html.'<form id="taxfilter-frm">';
 	$html =$html.'<div class="type-selector"><label for="message-type">Type:</label>';
 	
 	if (!empty($terms) && !is_wp_error($terms)) {
@@ -63,8 +65,7 @@ echo $html;
 
 
 
-<div class="main">
-	<input type=test>
+
 
 		<div class="results">
 		
